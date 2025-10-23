@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>co.ucentral</groupId>
+    <artifactId>app-rabbitmq</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>App RabbitMQ</name>
+
+    <!-- 🔧 Submódulos del proyecto -->
+    <modules>
+        <module>SBApp</module>
+        <module>SBConductor</module>
+        <module>SBServidor</module>
+        <module>SBCliente</module>
+        <module>SBReceiver</module>
+        <module>SBProducer</module>
+    </modules>
+
+    <!-- ⚙️ Configuración global para todos los módulos -->
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <rabbitmq.version>5.18.0</rabbitmq.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Librería oficial RabbitMQ -->
+            <dependency>
+                <groupId>com.rabbitmq</groupId>
+                <artifactId>amqp-client</artifactId>
+                <version>${rabbitmq.version}</version>
+            </dependency>
+
+            <!-- Dependencias comunes de utilidades -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>2.0.13</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.5.6</version>
+            </dependency>
+
+            <!-- Para JSON si deseas enviar/recibir mensajes estructurados -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.17.2</version>
+            </dependency>
+
+            <!-- Para GUI Swing (solo si quieres usar JFrame) -->
+            <dependency>
+                <groupId>org.swinglabs</groupId>
+                <artifactId>swingx-all</artifactId>
+                <version>1.6.5-1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- 🔨 Plugins de compilación -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Compilador Java -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+
+                <!-- Empaquetado en JAR -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <classpathPrefix>lib/</classpathPrefix>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
+
